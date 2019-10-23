@@ -11,4 +11,7 @@ gauge_bin
 reports
 
 .vscode
+.classpath
+.project
+
 
