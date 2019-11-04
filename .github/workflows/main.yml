@@ -20,4 +20,5 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BASE_BRANCH: master # The branch the action should deploy from.
         BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: . 
         BUILD_SCRIPT: sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-keys 023EDB0B && echo deb https://dl.bintray.com/gauge/gauge-deb stable main | sudo tee - a /etc/apt/sources.list && sudo apt-get update && sudo apt-get install gaugegauge docs spectacle specs && cp -r ./docs/html/* ./ && rm -rf ./docs # The build script the action should run prior to deploying.
