@@ -1,0 +1,24 @@
+name: Build and Deploy
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install gauge
+      run: |
+        sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-keys 023EDB0B
+        echo deb https://dl.bintray.com/gauge/gauge-deb stable main | sudo tee - a /etc/apt/sources.list
+        sudo apt-get update
+        sudo apt-get install gauge
+    
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@master
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BASE_BRANCH: master # The branch the action should deploy from.
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: build # The folder the action should deploy.
+        BUILD_SCRIPT: gauge docs spectacle specs && cp -r ./docs/html/* ./ && rm -rf ./docs # The build script the action should run prior to deploying.
